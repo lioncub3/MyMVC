@@ -1,0 +1,15 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.form-inline{
+  display: inline-block;
+}
+
+@media(min-width: 768px) {
+    .field-label-responsive {
+      padding-top: .5rem;
+      text-align: right;
+    }
+  }
