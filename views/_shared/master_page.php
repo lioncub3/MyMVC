@@ -1,3 +1,5 @@
+<?php
+ require_once("core/connection.php");?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -26,9 +28,18 @@
       <li class="nav-item">
         <a class="nav-link" href="/login">Login</a>
       </li>
+      <?php
+      if (isset($_SESSION["user"])) {
+        var_dump($_SESSION);
+        $db = DB::connect();
+        $user = $db->query("SELECT * FROM `users` WHERE `Name` = \"". $_SESSION["user:"] ."\" ")->fetchAll();
+        if ($user->Admin == true)
+        {
+      ?>
       <li class="nav-item">
         <a class="nav-link" href="/admin">Admin</a>
       </li>
+      <?php }} ?>
     </ul>
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -39,6 +50,8 @@
 
     <div class="content" id="pages_app">
       <?php
+                  
+      extract($params);
       require_once($view_address);
       ?>
     </div>

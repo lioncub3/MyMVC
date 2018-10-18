@@ -1,72 +1,94 @@
 <?php
 require_once("core/controller.php");
+require_once("core/connection.php");
+function generateRandomString($length = 10) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}
 
 class adminController extends Controller
 {
     function indexAction()
     {
-        $this->renderView("index.php");
-        require_once("db.config.php");
-        try {
-            $dbh = new PDO('mysql:host=' . servername . ';dbname=' . database . '', username, password);
+        $db = DB::connect();
             if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST["iddelete"]) && !empty($_POST["iddelete"])) {
                 $sql = "DELETE FROM `products` WHERE IDProduct = ?";
-                $stmt = $dbh->prepare($sql);
+                $stmt = $db->prepare($sql);
                 $stmt->execute([$_POST["iddelete"]]);   
             }
-            $dbh = null;
-        } catch (PDOException $e) {
-            print "Error!: " . $e->getMessage() . "<br/>";
-            die();
-        }
+        $this->renderView("index.php");
     }
 
     function newCategoryAction()
     {
-        $this->renderView("newCategory.php");
-        require_once("db.config.php");
-        try {
-            $dbh = new PDO('mysql:host=' . servername . ';dbname=' . database . '', username, password);
-            if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST["categoryname"]) && isset($_POST["parentcategory"]) 
-            && !empty($_POST["categoryname"]) && !empty($_POST["parentcategory"])) {
+        $db = DB::connect();
+            if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST["categoryname"]) && isset($_POST["parentcategory"])
+            && !empty($_POST["categoryname"])) {
                 $sql = "INSERT INTO `categorys`(`NameCategory`, `ParentCategory`) VALUES (?, ?)";
-                $stmt = $dbh->prepare($sql);
+                $stmt = $db->prepare($sql);
                 $stmt->execute([$_POST["categoryname"], $_POST["parentcategory"]]);
             }
-            $dbh = null;
-        } catch (PDOException $e) {
-            print "Error!: " . $e->getMessage() . "<br/>";
-            die();
-        }
+        $this->renderView("newCategory.php");
     }
 
     function newProductAction()
     {
-        $this->renderView("newProduct.php");
-        require_once("db.config.php");
-        try {
-            $dbh = new PDO('mysql:host=' . servername . ';dbname=' . database . '', username, password);
+        $db = DB::connect();
             if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST["productname"]) && isset($_POST["productprice"]) && 
             isset($_POST["productdesc"]) && isset($_POST["productcategory"]) && 
             !empty($_POST["productname"]) && !empty($_POST["productprice"]) &&
             !empty($_POST["productdesc"]) && !empty($_POST["productcategory"])) {
                 $sql = "INSERT INTO `products`(`Name`, `Price`, `Desc`, `CategoryName`) VALUES (?, ?, ?, ?)";
-                $stmt = $dbh->prepare($sql);
+                $stmt = $db->prepare($sql);
                 $stmt->execute([$_POST["productname"], $_POST["productprice"], $_POST["productdesc"], 
                 $_POST["productcategory"]]);
-                $idpost = $dbh->lastInsertId();
+                $idpost = $db->lastInsertId();
                 $sql = "INSERT INTO `photos`(`IDProduct`, `Path`) VALUES (?, ?)";
                 $length = count($_FILES['photos']['name']);
                 for ($i = 0; $i < $length; $i++) {
-                    move_uploaded_file($_FILES['photos']["tmp_name"][$i], "photos/" . $_FILES['photos']["name"][$i]);
-                    $stmt = $dbh->prepare($sql);
-                    $stmt->execute([$idpost, $_FILES["photos"]["name"][$i]]);
+                    $randname = generateRandomString(10) . ".png";
+                    $filepath = "photos/" . $randname;
+                    move_uploaded_file($_FILES['photos']["tmp_name"][$i], $filepath);
+                    chmod($filepath, 0777);
+                    $stmt = $db->prepare($sql);
+                    $stmt->execute([$idpost, $randname]);
                 }
             }
-            $dbh = null;
-        } catch (PDOException $e) {
-            print "Error!: " . $e->getMessage() . "<br/>";
-            die();
+            $categorys = $db->query("SELECT * FROM `categorys`")->fetchAll();
+            $this->renderView("newProduct.php", ["categorys" => $categorys]);
+    }
+
+    function editProductAction()
+    {
+        $db = DB::connect();
+        $id = $_POST["idedit"] ?? 0;
+        
+        
+        if($id){
+            $product = $db->query("SELECT * FROM products WHERE IDProduct = " . $id)->fetch();
+            $categorys = $db->query("SELECT * FROM `categorys`")->fetchAll();
+            if(!$product)
+                {
+                    echo "Not found product";
+                }
+            $this->renderView("editProduct.php", ['p'=> $product, "categorys" => $categorys]);
         }
+       
+            if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST["productname"]) && isset($_POST["productprice"]) && 
+            isset($_POST["productdesc"]) && isset($_POST["productcategory"]) && 
+            !empty($_POST["productname"]) && !empty($_POST["productprice"]) &&
+            !empty($_POST["productdesc"]) && !empty($_POST["productcategory"])
+            && isset($_POST["productid"]) && !empty($_POST["productid"])) {
+                $db = new PDO('mysql:host=' . servername . ';dbname=' . database . '', username, password);
+                $sql = "UPDATE `products` SET `Name` = ?, `Price` = ?, `Desc` = ?, `CategoryName` = ? WHERE IDProduct = ?";
+                $stmt = $db->prepare($sql);
+                $stmt->execute([$_POST["productname"], $_POST["productprice"], $_POST["productdesc"], 
+                $_POST["productcategory"], $_POST["productid"]]);
+            }
     }
 }

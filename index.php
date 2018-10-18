@@ -2,6 +2,11 @@
 const defController = "home";
 const defAction = "index";
 
+define('ROOT', __DIR__);
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 $urlInfo = explode("/", strtolower($_SERVER["REQUEST_URI"]));
 
 $controller = (isset($urlInfo[1]) && !empty($urlInfo[1]) ? $urlInfo[1] : defController) . "Controller";

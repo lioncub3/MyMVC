@@ -1,5 +1,5 @@
 <?php
-    const servername = "127.0.0.1";
+    const servername = "localhost";
     const username = "root";
     const password = "";
     // const port = 3306;
