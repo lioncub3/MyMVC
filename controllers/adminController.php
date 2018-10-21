@@ -84,11 +84,23 @@ class adminController extends Controller
             !empty($_POST["productname"]) && !empty($_POST["productprice"]) &&
             !empty($_POST["productdesc"]) && !empty($_POST["productcategory"])
             && isset($_POST["productid"]) && !empty($_POST["productid"])) {
-                $db = new PDO('mysql:host=' . servername . ';dbname=' . database . '', username, password);
                 $sql = "UPDATE `products` SET `Name` = ?, `Price` = ?, `Desc` = ?, `CategoryName` = ? WHERE IDProduct = ?";
                 $stmt = $db->prepare($sql);
                 $stmt->execute([$_POST["productname"], $_POST["productprice"], $_POST["productdesc"], 
                 $_POST["productcategory"], $_POST["productid"]]);
             }
+    }
+    
+    function editUsersAction()
+    {
+        $db = DB::connect();
+        $users = $db->query("SELECT * FROM `users`")->fetchAll();
+        if (isset($_POST["permission"]) && isset($_POST["id"]) && !empty($_POST["id"])) {
+            var_dump($_POST["permission"]);
+            $sql = "UPDATE `users` SET `Admin` = ? WHERE IDUser = ?";
+            $stmt = $db->prepare($sql);
+            $stmt->execute([$_POST["permission"], $_POST["id"]]);
+        }
+        $this->renderView("editUsers.php", ["users" => $users]);
     }
 }

@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once("db.config.php");
 require_once("core/controller.php");
 require_once("core/connection.php");
@@ -49,7 +48,6 @@ class loginController extends Controller
                     if ($query->rowCount() >= 1) {
                         $_SESSION["user"] = $login;
                         $_SESSION["time_start_login"] = time();
-                        var_dump($_SESSION);
                     } else {
                         $messeg = "Username/Password is wrong";
                     }

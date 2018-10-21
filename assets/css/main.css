@@ -7,6 +7,10 @@
   display: inline-block;
 }
 
+.img-product{
+  height: 300px;
+}
+
 @media(min-width: 768px) {
     .field-label-responsive {
       padding-top: .5rem;

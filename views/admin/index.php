@@ -2,6 +2,7 @@
 <div class="conteiner">
     <a href="admin/newCategory" class="btn btn-light">New category</a>
     <a href="admin/newProduct" class="btn btn-light">New product</a>
+    <a href="admin/editUsers" class="btn btn-light">Edit user</a>
 </div>
 <div class="row">
     <?php
@@ -19,12 +20,12 @@
                                     if ($index == 0) {
                                         ?>
                                       <div class="carousel-item active">
-                                           <img src="<?="photos/" . $photo->Path?>" alt="Card image cap">
+                                           <img class="img-product" src="<?="photos/" . $photo->Path?>" alt="Card image cap">
                                      </div>
                                       <?php
                                     } else { ?>
                                <div class="carousel-item">
-                                           <img class="card-img-top" src="<?="photos/" . $photo->Path?>" alt="Card image cap">
+                                           <img class="img-product" src="<?="photos/" . $photo->Path?>" alt="Card image cap">
                                      </div>
                                     <?php }}
                              ?>
@@ -33,7 +34,7 @@
                 <div class="card-body">
                     <h5 class="card-title"><?= $row->Name ?></h5>
                     <p class="card-text"><?= $row->Desc ?></p>
-                    <a href="#" class="btn btn-primary"><?= $row->Price ?></a>
+                    <a href="#" class="btn btn-primary"><?= $row->Price ?> ₴</a>
                     <form action="admin/editProduct" class="form-inline" method="POST">
                         <input class="d-none" name="idedit" type="number" value="<?= $row->IDProduct ?>"/>
                         <button type="submit" class="btn btn-primary">Edit</button>
@@ -47,6 +48,5 @@
         </div>
         <?php
     }
-    $dbh = null;
     ?>
 </div>

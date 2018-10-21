@@ -30,17 +30,28 @@
       </li>
       <?php
       if (isset($_SESSION["user"])) {
-        var_dump($_SESSION);
         $db = DB::connect();
-        $user = $db->query("SELECT * FROM `users` WHERE `Name` = \"". $_SESSION["user:"] ."\" ")->fetchAll();
+        $user = $db->query("SELECT * FROM `users` WHERE `Name` = \"". $_SESSION["user"] ."\" ")->fetch();
         if ($user->Admin == true)
         {
       ?>
       <li class="nav-item">
         <a class="nav-link" href="/admin">Admin</a>
       </li>
-      <?php }} ?>
+      <?php } ?> <li class="nav-item">
+        <a class="nav-link" href="/home/logout">Log out</a>
+      </li> <?php } ?>
     </ul>
+    <div>
+     <ul class="navbar-nav mr-auto">
+      <?php if (isset($_SESSION["user"]))
+      { ?>
+      <li class="nav-item">
+        <a class="nav-link"><?=$_SESSION["user"]?></a>
+      </li>
+      <?php }?>
+     </ul>
+    </div>
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
