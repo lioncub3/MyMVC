@@ -13,8 +13,17 @@ function generateRandomString($length = 10) {
 
 class adminController extends Controller
 {
+    private function isAdmin()
+    {
+        if (!$_SESSION["admin"]?? false){
+            header('Location: /login');
+            exit;
+        }
+    }
     function indexAction()
     {
+        $this->isAdmin();
+        
         $db = DB::connect();
             if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST["iddelete"]) && !empty($_POST["iddelete"])) {
                 $sql = "DELETE FROM `products` WHERE IDProduct = ?";
@@ -22,10 +31,13 @@ class adminController extends Controller
                 $stmt->execute([$_POST["iddelete"]]);   
             }
         $this->renderView("index.php");
+        
     }
 
     function newCategoryAction()
     {
+        $this->isAdmin();
+
         $db = DB::connect();
             if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST["categoryname"]) && isset($_POST["parentcategory"])
             && !empty($_POST["categoryname"])) {
@@ -38,6 +50,8 @@ class adminController extends Controller
 
     function newProductAction()
     {
+        $this->isAdmin();
+
         $db = DB::connect();
             if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST["productname"]) && isset($_POST["productprice"]) && 
             isset($_POST["productdesc"]) && isset($_POST["productcategory"]) && 
@@ -65,6 +79,8 @@ class adminController extends Controller
 
     function editProductAction()
     {
+        $this->isAdmin();
+
         $db = DB::connect();
         $id = $_POST["idedit"] ?? 0;
         
@@ -93,6 +109,8 @@ class adminController extends Controller
     
     function editUsersAction()
     {
+        $this->isAdmin();
+
         $db = DB::connect();
         $users = $db->query("SELECT * FROM `users`")->fetchAll();
         if (isset($_POST["permission"]) && isset($_POST["id"]) && !empty($_POST["id"])) {

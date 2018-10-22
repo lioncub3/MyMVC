@@ -25,22 +25,20 @@
       <li class="nav-item">
         <a class="nav-link" href="/registration">Registration</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/login">Login</a>
-      </li>
-      <?php
-      if (isset($_SESSION["user"])) {
-        $db = DB::connect();
-        $user = $db->query("SELECT * FROM `users` WHERE `Name` = \"". $_SESSION["user"] ."\" ")->fetch();
-        if ($user->Admin == true)
-        {
-      ?>
+      <?php if (isset($_SESSION["user"])):  ?>
+       <?php if ($_SESSION["admin"] ?? false): ?>
       <li class="nav-item">
         <a class="nav-link" href="/admin">Admin</a>
       </li>
-      <?php } ?> <li class="nav-item">
+      <?php endif; ?> 
+      <li class="nav-item">
         <a class="nav-link" href="/home/logout">Log out</a>
-      </li> <?php } ?>
+        </li> 
+      <?php else: ?>
+      <li class="nav-item">
+        <a class="nav-link" href="/login">Login</a>
+      </li>
+      <?php endif; ?>
     </ul>
     <div>
      <ul class="navbar-nav mr-auto">

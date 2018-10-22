@@ -24,6 +24,9 @@ class loginController extends Controller
                 );
                 $options = array(
                     'http' => array(
+                        'header' => "Content-Type: application/x-www-form-urlencoded\r\n".
+                        "Content-Length: ".strlen(http_build_query($data))."\r\n".
+                        "User-Agent:MyAgent/1.0\r\n",
                         'method' => 'POST',
                         'content' => http_build_query($data)
                     )
@@ -31,23 +34,30 @@ class loginController extends Controller
                 $context = stream_context_create($options);
                 $verify = file_get_contents($url, false, $context);
                 $captcha_success = json_decode($verify);
+
                 if ($captcha_success->success == false) {
                     echo "<p>You are a bot! Go away!</p>";
                 } else if ($captcha_success->success == true) {
-                    echo "<p>You are not a bot!</p>";
+
+                  
                     $login = $_POST["name"];
-                    $password = md5($_POST["password"]);
+                    $password = md5($_POST["password"] ?? '');
                 if (empty($login) || empty($password)) {
                     $messeg = "Username/Password con't be empty";
                 } else {
-                    $sql = "SELECT Name, Password FROM Users WHERE Name=? AND 
+                    $sql = "SELECT Name, Password, Admin FROM `users` WHERE Name=? AND 
                     Password=? ";
                     $query = $db->prepare($sql);
                     $query->execute(array($login, $password));
 
-                    if ($query->rowCount() >= 1) {
+                    $user = $query->fetch();
+
+                    if ($user) {
                         $_SESSION["user"] = $login;
+                        $_SESSION["admin"] = $user->Admin;
                         $_SESSION["time_start_login"] = time();
+                        header('Location: /');
+                        exit;
                     } else {
                         $messeg = "Username/Password is wrong";
                     }
