@@ -112,9 +112,8 @@ class adminController extends Controller
         $this->isAdmin();
 
         $db = DB::connect();
-        $users = $db->query("SELECT * FROM `users`")->fetchAll();
+        $users = $db->query("SELECT * FROM `users` WHERE Name != '" . $_SESSION["user"] . "'")->fetchAll();
         if (isset($_POST["permission"]) && isset($_POST["id"]) && !empty($_POST["id"])) {
-            var_dump($_POST["permission"]);
             $sql = "UPDATE `users` SET `Admin` = ? WHERE IDUser = ?";
             $stmt = $db->prepare($sql);
             $stmt->execute([$_POST["permission"], $_POST["id"]]);
