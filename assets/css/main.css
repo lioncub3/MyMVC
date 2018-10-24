@@ -13,6 +13,12 @@
   margin: auto;
 }
 
+.img-basket{
+  width: 32px;
+  display: block;
+  margin: auto;
+}
+
 @media(min-width: 768px) {
     .field-label-responsive {
       padding-top: .5rem;

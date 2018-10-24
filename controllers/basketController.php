@@ -2,11 +2,11 @@
 require_once("core/controller.php");
 require_once("core/connection.php");
 
-class adminController extends Controller
+class basketController extends Controller
 {
-    private function isAdmin()
+    private function isLogin()
     {
-        if (!$_SESSION["admin"]?? false){
+        if (!$_SESSION["user"]?? false){
             header('Location: /login');
             exit;
         }
@@ -14,15 +14,8 @@ class adminController extends Controller
 
     function indexAction()
     {
-        $this->isAdmin();
-        
-        $db = DB::connect();
-            if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST["iddelete"]) && !empty($_POST["iddelete"])) {
-                $sql = "DELETE FROM `products` WHERE IDProduct = ?";
-                $stmt = $db->prepare($sql);
-                $stmt->execute([$_POST["iddelete"]]);   
-            }
+        $this->isLogin();
+
         $this->renderView("index.php");
-        
     }
 }

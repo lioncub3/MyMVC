@@ -4,6 +4,7 @@
         $products = $db->query("SELECT * FROM products")->fetchAll();
     foreach ($products as $row) {
         $photos = $db->query("SELECT * FROM `photos` WHERE IDProduct = $row->IDProduct")->fetchAll();
+        $json = json_encode($row);
         ?>
         <div class="col-sm-4">
             <div class="card">
@@ -28,7 +29,8 @@
                 <div class="card-body">
                     <h5 class="card-title"><?= $row->Name ?></h5>
                     <p class="card-text"><?= $row->Desc ?></p>
-                    <a href="#" class="btn btn-primary"><?= $row->Price ?> ₴</a>
+                    <div class="d-none product_data"><?= $json ?></div>
+                    <button @click="addProdBasket('<?=$row->IDProduct?>', '<?=$row->Name?>', '<?=$row->Desc?>', '<?=$row->Price?>')" class="btn btn-success"><?= $row->Price ?> ₴</button>
                 </div>
             </div>
         </div>

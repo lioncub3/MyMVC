@@ -47,6 +47,9 @@
       <li class="nav-item">
         <a class="nav-link"><?=$_SESSION["user"]?></a>
       </li>
+      <li class="nav-item">
+        <a href="/basket" class="nav-link"><img class="img-basket" src="if_shopping-cart_216477.png"></a>
+      </li>
       <?php }?>
      </ul>
     </div>
