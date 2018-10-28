@@ -30,7 +30,9 @@
                     <h5 class="card-title"><?= $row->Name ?></h5>
                     <p class="card-text"><?= $row->Desc ?></p>
                     <div class="d-none product_data"><?= $json ?></div>
-                    <button @click="addProdBasket('<?=$row->IDProduct?>', '<?=$row->Name?>', '<?=$row->Desc?>', '<?=$row->Price?>')" class="btn btn-success"><?= $row->Price ?> ₴</button>
+                    <button @click="addProdBasket('<?=$row->IDProduct?>', '<?=$row->Name?>', 
+                    '<?=$row->Desc?>', '<?=$row->Price?>', '<?=$row->CategoryName?>')"
+                    class="btn btn-success"><?= $row->Price ?> ₴</button>
                 </div>
             </div>
         </div>

@@ -32,7 +32,7 @@
       </li>
       <?php endif; ?> 
       <li class="nav-item">
-        <a class="nav-link" href="/home/logout">Log out</a>
+        <a @click="deleteLocalStorage" class="nav-link" href="/home/logout">Log out</a>
         </li> 
       <?php else: ?>
       <li class="nav-item">
@@ -42,15 +42,14 @@
     </ul>
     <div>
      <ul class="navbar-nav mr-auto">
-      <?php if (isset($_SESSION["user"]))
-      { ?>
+      <?php if (isset($_SESSION["user"])): ?>
       <li class="nav-item">
         <a class="nav-link"><?=$_SESSION["user"]?></a>
       </li>
       <li class="nav-item">
         <a href="/basket" class="nav-link"><img class="img-basket" src="if_shopping-cart_216477.png"></a>
       </li>
-      <?php }?>
+      <?php endif;?>
      </ul>
     </div>
     <form class="form-inline my-2 my-lg-0">

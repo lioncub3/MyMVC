@@ -3,6 +3,7 @@
     <a href="admin/newCategory" class="btn btn-light">New category</a>
     <a href="admin/newProduct" class="btn btn-light">New product</a>
     <a href="admin/editUsers" class="btn btn-light">Edit user</a>
+    <a href="admin/orders" class="btn btn-light">Orders</a>
 </div>
 <div class="row">
     <?php

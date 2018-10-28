@@ -16,6 +16,20 @@ class basketController extends Controller
     {
         $this->isLogin();
 
+        $db = DB::connect();
+        if (isset($_POST["productsbasket"]) && !empty($_POST["productsbasket"]) && 
+        isset($_POST["userid"]) && !empty($_POST["userid"])) {
+            $sql = "INSERT INTO `orders` (`IDUser`) VALUES (?)";
+            $stmt = $db->prepare($sql);
+            $stmt->execute([$_POST["userid"]]);
+
+            $idProducts = 
+
+            $sql = "INSERT INTO `productsorders` (`IDProduct`, `IDOrder`) VALUES (?, ?)";
+            $stmt = $db->prepare($sql);
+            $stmt->execute([$_POST["userid"]]);
+        }
+
         $this->renderView("index.php");
     }
 }

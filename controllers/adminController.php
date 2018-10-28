@@ -120,4 +120,11 @@ class adminController extends Controller
         }
         $this->renderView("editUsers.php", ["users" => $users]);
     }
+
+    function ordersAction()
+    {
+        $this->isAdmin();
+
+        $this->renderView("orders.php");
+    }
 }
