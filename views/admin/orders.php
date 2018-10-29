@@ -9,7 +9,7 @@
     <div class="card-header" id="headingOne">
       <h5 class="mb-0">
         <button class="btn btn-link" data-toggle="collapse" data-target="#<?=$key?>" aria-expanded="true" aria-controls="<?=$key?>">
-          <?= $order->IDOrder ?> <?= $user->Name ?>
+          <?= $key + 1 ?> <?= $user->Name ?>
         </button>
       </h5>
     </div>
@@ -29,9 +29,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($idproducts as $idproduct): 
-                            $product = $db->query("SELECT * FROM `products` WHERE IDProduct = " . $idproduct . "")->fetch();
-                            var_dump($product);
+                        <?php foreach ($idproducts as $idproduct):
+                            $product = $db->query("SELECT * FROM `products` WHERE IDProduct = " . $idproduct->IDProduct . "")->fetch();
                             ?>
                             <tr>
                                 <td><?=$product->IDProduct?></td>
@@ -39,7 +38,7 @@
                                 <td><?=$product->Desc?></td>
                                 <td><?=$product->Price?></td>
                                 <td><?=$product->Count?></td>
-                                <td><?=$product->Category?></td>
+                                <td><?=$product->CategoryName?></td>
                             </tr>
                         <?php endforeach;?>
                     </tbody>
