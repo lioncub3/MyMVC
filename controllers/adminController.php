@@ -68,7 +68,7 @@ class adminController extends Controller
                     $randname = generateRandomString(10) . ".png";
                     $filepath = "photos/" . $randname;
                     move_uploaded_file($_FILES['photos']["tmp_name"][$i], $filepath);
-                    chmod($filepath, 0777);
+                    //chmod($filepath, 0777);
                     $stmt = $db->prepare($sql);
                     $stmt->execute([$idpost, $randname]);
                 }

@@ -22,9 +22,11 @@
       <li class="nav-item">
         <a class="nav-link" href="/product">Products</a>
       </li>
+      <?php if (!isset($_SESSION["user"])):  ?>
       <li class="nav-item">
         <a class="nav-link" href="/registration">Registration</a>
       </li>
+      <?php endif; ?>
       <?php if (isset($_SESSION["user"])):  ?>
        <?php if ($_SESSION["admin"] ?? false): ?>
       <li class="nav-item">

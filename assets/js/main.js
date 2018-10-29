@@ -1,3 +1,6 @@
+if(localStorage.getItem("products") == null) {
+    localStorage.setItem('products', JSON.stringify([]));
+}
 var app3 = new Vue({
     el: '#pages_app',
 
@@ -8,6 +11,9 @@ var app3 = new Vue({
 
     methods: {
         addProdBasket: function(idproduct, name, desc, price, category) {
+            // if(products == null) {
+            //     localStorage.setItem("products", "");
+            // }
             this.products.push({ idproduct: idproduct, name: name, desc: desc, price: price, category: category });
 
             localStorage.setItem('products', JSON.stringify(this.products));
