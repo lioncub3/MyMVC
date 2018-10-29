@@ -7,6 +7,9 @@
 <input name="productprice" class="form-control" type="number" placeholder="Price">
 </div>
 <div class="form-group">
+<input name="productcount" class="form-control mr-sm-2" type="number" placeholder="Count">
+</div>
+<div class="form-group">
 <input name="productdesc" class="form-control mr-sm-2" type="text" placeholder="Description">
 </div>
 <div class="form-group">

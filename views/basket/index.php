@@ -7,6 +7,7 @@
         <th>Name</th>
         <th>Desc</th>
         <th>Price</th>
+        <th>Count</th>
         <th>Category</th>
         <th>Edit</th>
       </tr>
@@ -17,6 +18,7 @@
         <td>{{product.name}}</td>
         <td>{{product.desc}}</td>
         <td>{{product.price}}</td>
+        <td>{{product.count}}</td>
         <td>{{product.category}}</td>
         <td><button @click="deleteProduct" class="btn btn-danger">X</button></td>
       </tr> 

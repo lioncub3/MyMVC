@@ -28,11 +28,11 @@
                              </div>
                 <div class="card-body">
                     <h5 class="card-title"><?= $row->Name ?></h5>
-                    <p class="card-text"><?= $row->Desc ?></p>
+                    <p class="card-text"><p class="count-product">Count: <?= $row->Count ?></p><?= $row->Desc ?></p>
                     <div class="d-none product_data"><?= $json ?></div>
                     <button @click="addProdBasket('<?=$row->IDProduct?>', '<?=$row->Name?>', 
-                    '<?=$row->Desc?>', '<?=$row->Price?>', '<?=$row->CategoryName?>')"
-                    class="btn btn-success"><?= $row->Price ?> ₴</button>
+                    '<?=$row->Desc?>', '<?=$row->Price?>', '<?=$row->Count?>', '<?=$row->CategoryName?>')"
+                    class="btn btn-success" <?php if (!isset($_SESSION["user"])):?> disabled <?php endif; ?>><?= $row->Price ?> ₴</button>
                 </div>
             </div>
         </div>

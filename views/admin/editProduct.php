@@ -10,6 +10,9 @@
     value="<?=$p->Price?>">
   </div>
   <div class="form-group">
+    <input name="productcount" type="text" class="form-control" placeholder="Count"
+    value="<?=$p->Count?>">
+  <div class="form-group">
     <input name="productdesc" type="text" class="form-control" placeholder="Desc"
     value="<?=$p->Desc?>">
   </div>

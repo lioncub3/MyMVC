@@ -54,12 +54,13 @@ class adminController extends Controller
 
         $db = DB::connect();
             if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST["productname"]) && isset($_POST["productprice"]) && 
-            isset($_POST["productdesc"]) && isset($_POST["productcategory"]) && 
+            isset($_POST["productdesc"]) && isset($_POST["productcategory"]) && isset($_POST["productcount"]) &&
             !empty($_POST["productname"]) && !empty($_POST["productprice"]) &&
-            !empty($_POST["productdesc"]) && !empty($_POST["productcategory"])) {
-                $sql = "INSERT INTO `products`(`Name`, `Price`, `Desc`, `CategoryName`) VALUES (?, ?, ?, ?)";
+            !empty($_POST["productdesc"]) && !empty($_POST["productcategory"]) && !empty($_POST["productcount"])
+            ) {
+                $sql = "INSERT INTO `products`(`Name`, `Price`, `Desc`, `Count`, `CategoryName`) VALUES (?, ?, ?, ?, ?)";
                 $stmt = $db->prepare($sql);
-                $stmt->execute([$_POST["productname"], $_POST["productprice"], $_POST["productdesc"], 
+                $stmt->execute([$_POST["productname"], $_POST["productprice"], $_POST["productdesc"], $_POST["productcount"],
                 $_POST["productcategory"]]);
                 $idpost = $db->lastInsertId();
                 $sql = "INSERT INTO `photos`(`IDProduct`, `Path`) VALUES (?, ?)";
@@ -68,7 +69,7 @@ class adminController extends Controller
                     $randname = generateRandomString(10) . ".png";
                     $filepath = "photos/" . $randname;
                     move_uploaded_file($_FILES['photos']["tmp_name"][$i], $filepath);
-                    //chmod($filepath, 0777);
+                    chmod($filepath, 0777);
                     $stmt = $db->prepare($sql);
                     $stmt->execute([$idpost, $randname]);
                 }
@@ -98,12 +99,13 @@ class adminController extends Controller
             if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST["productname"]) && isset($_POST["productprice"]) && 
             isset($_POST["productdesc"]) && isset($_POST["productcategory"]) && 
             !empty($_POST["productname"]) && !empty($_POST["productprice"]) &&
-            !empty($_POST["productdesc"]) && !empty($_POST["productcategory"])
-            && isset($_POST["productid"]) && !empty($_POST["productid"])) {
-                $sql = "UPDATE `products` SET `Name` = ?, `Price` = ?, `Desc` = ?, `CategoryName` = ? WHERE IDProduct = ?";
+            !empty($_POST["productdesc"]) && !empty($_POST["productcategory"])&& 
+            isset($_POST["productid"]) && !empty($_POST["productid"]) &&
+            isset($_POST["productcount"]) && !empty($_POST["productcount"])) {
+                $sql = "UPDATE `products` SET `Name` = ?, `Price` = ?, `Desc` = ?, `Count` = ?, `CategoryName` = ? WHERE IDProduct = ?";
                 $stmt = $db->prepare($sql);
                 $stmt->execute([$_POST["productname"], $_POST["productprice"], $_POST["productdesc"], 
-                $_POST["productcategory"], $_POST["productid"]]);
+                $_POST["productcategory"], $_POST["productcount"], $_POST["productid"]]);
             }
     }
     

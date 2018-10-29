@@ -10,11 +10,11 @@ var app3 = new Vue({
     },
 
     methods: {
-        addProdBasket: function(idproduct, name, desc, price, category) {
+        addProdBasket: function(idproduct, name, desc, price, count, category) {
             // if(products == null) {
             //     localStorage.setItem("products", "");
             // }
-            this.products.push({ idproduct: idproduct, name: name, desc: desc, price: price, category: category });
+            this.products.push({ idproduct: idproduct, name: name, desc: desc, price: price, count: count, category: category });
 
             localStorage.setItem('products', JSON.stringify(this.products));
         },

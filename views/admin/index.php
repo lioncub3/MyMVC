@@ -34,8 +34,8 @@
                              </div>
                 <div class="card-body">
                     <h5 class="card-title"><?= $row->Name ?></h5>
-                    <p class="card-text"><?= $row->Desc ?></p>
-                    <a href="#" class="btn btn-primary"><?= $row->Price ?> ₴</a>
+                    <p class="card-text"><p class="count-product">Count: <?= $row->Count ?></p><?= $row->Desc ?></p>
+                    <button class="btn btn-success" disabled><?= $row->Price ?> ₴</button>
                     <form action="admin/editProduct" class="form-inline" method="POST">
                         <input class="d-none" name="idedit" type="number" value="<?= $row->IDProduct ?>"/>
                         <button type="submit" class="btn btn-primary">Edit</button>
