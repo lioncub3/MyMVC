@@ -127,6 +127,9 @@ class adminController extends Controller
     {
         $this->isAdmin();
 
-        $this->renderView("orders.php");
+        $db = DB::connect();
+        $orders = $db->query("SELECT * FROM `orders`")->fetchAll();
+
+        $this->renderView("orders.php", ["orders" => $orders]);
     }
 }

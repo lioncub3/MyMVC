@@ -17,10 +17,12 @@ var app3 = new Vue({
             this.products.push({ idproduct: idproduct, name: name, desc: desc, price: price, count: count, category: category });
 
             localStorage.setItem('products', JSON.stringify(this.products));
+            this.string_products = localStorage.getItem("products");
         },
         deleteProduct: function(index) {
             this.products.splice(index, 1);
             localStorage.setItem('products', JSON.stringify(this.products));
+            this.string_products = localStorage.getItem("products");
         },
         deleteLocalStorage: function() {
             localStorage.removeItem("products");

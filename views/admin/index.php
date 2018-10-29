@@ -9,7 +9,7 @@
     <?php
         $db = DB::connect();
         $products = $db->query("SELECT * FROM products")->fetchAll();
-    foreach ($products as $row) {
+        foreach ($products as $row) {
         $photos = $db->query("SELECT * FROM `photos` WHERE IDProduct = $row->IDProduct")->fetchAll();
         ?>
         <div class="col-sm-4">

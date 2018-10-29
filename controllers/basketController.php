@@ -19,19 +19,19 @@ class basketController extends Controller
         $db = DB::connect();
         if (isset($_POST["productsbasket"]) && !empty($_POST["productsbasket"]) && 
         isset($_POST["userid"]) && !empty($_POST["userid"])) {
-            // $sql = "INSERT INTO `orders` (`IDUser`) VALUES (?)";
-            // $stmt = $db->prepare($sql);
-            // $stmt->execute([$_POST["userid"]]);
+            $sql = "INSERT INTO `orders` (`IDUser`) VALUES (?)";
+            $stmt = $db->prepare($sql);
+            $stmt->execute([$_POST["userid"]]);
+
+            $idorder = $db->lastInsertId();
 
             $products = json_decode($_POST["productsbasket"]);
 
             foreach ($products as $product) {
-                echo $product->idproduct."<br>";
+                $sql = "INSERT INTO `productsorders` (`IDOrder`, `IDProduct`) VALUES (?, ?)";
+                $stmt = $db->prepare($sql);
+                $stmt->execute([$idorder, $product->idproduct]);
             }
-
-            // $sql = "INSERT INTO `productsorders` (`IDProduct`, `IDOrder`) VALUES (?, ?)";
-            // $stmt = $db->prepare($sql);
-            // $stmt->execute([$_POST["userid"]]);
         }
 
         $this->renderView("index.php");
