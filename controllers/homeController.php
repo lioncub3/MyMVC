@@ -7,11 +7,6 @@ class homeController extends Controller
     {
         $this->renderView("index.php");
     }
-    
-    function testAction()
-    {
-        $this->renderView("test.php");
-    }
 
     function logoutAction()
     {

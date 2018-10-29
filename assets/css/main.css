@@ -24,6 +24,10 @@
   color: rgb(0, 255, 0);
 }
 
+.navbar{
+  background-image: linear-gradient(rgb(255, 255, 255), rgb(190, 255, 181));
+}
+
 @media(min-width: 768px) {
     .field-label-responsive {
       padding-top: .5rem;
